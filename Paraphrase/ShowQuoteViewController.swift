@@ -26,24 +26,7 @@ class ShowQuoteViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareQuote))
 
         // format the text and author of this quote
-        var textAttributes = [NSAttributedStringKey: Any]()
-        var authorAttributes = [NSAttributedStringKey: Any]()
-
-        if let quoteFont = UIFont(name: "Georgia", size: 24) {
-            let fontMetrics = UIFontMetrics(forTextStyle: .headline)
-            textAttributes[.font] = fontMetrics.scaledFont(for: quoteFont)
-        }
-
-        if let authorFont = UIFont(name: "Georgia-Italic", size: 16) {
-            let fontMetrics = UIFontMetrics(forTextStyle: .body)
-            authorAttributes[.font] = fontMetrics.scaledFont(for: authorFont)
-        }
-
-        let finishedQuote = NSMutableAttributedString(string: quote.text, attributes: textAttributes)
-        let authorString = NSAttributedString(string: "\n\n\(quote.author)", attributes: authorAttributes)
-        finishedQuote.append(authorString)
-
-        quoteLabel.attributedText = finishedQuote
+        quoteLabel.attributedText = quote.attributedString
     }
 
     @objc func shareQuote() {
@@ -52,7 +35,7 @@ class ShowQuoteViewController: UIViewController {
         }
 
         // format the quote neatly and share it
-        let fullText = "\"\(quote.text)\"\n   — \(quote.author)"
+        let fullText = quote.multiLine
         let activity = UIActivityViewController(activityItems: [fullText], applicationActivities: nil)
         present(activity, animated: true)
 
