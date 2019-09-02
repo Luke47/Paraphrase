@@ -8,6 +8,7 @@
 
 import Foundation
 import GameplayKit
+import SwiftyBeaver
 
 struct QuotesModel {
     private var quotes = [Quote]()

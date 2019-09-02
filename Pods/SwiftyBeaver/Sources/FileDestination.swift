@@ -12,6 +12,7 @@ import Foundation
 public class FileDestination: BaseDestination {
 
     public var logFileURL: URL?
+    public var syncAfterEachWrite: Bool = false
 
     override public var defaultHashValue: Int {return 2}
     let fileManager = FileManager.default
@@ -88,6 +89,15 @@ public class FileDestination: BaseDestination {
         guard let url = logFileURL else { return false }
         do {
             if fileManager.fileExists(atPath: url.path) == false {
+                
+                let directoryURL = url.deletingLastPathComponent()
+                if fileManager.fileExists(atPath: directoryURL.path) == false {
+                    try fileManager.createDirectory(
+                        at: directoryURL,
+                        withIntermediateDirectories: true
+                    )
+                }
+                
                 // create file if not existing
                 let line = str + "\n"
                 try line.write(to: url, atomically: true, encoding: .utf8)
@@ -110,6 +120,9 @@ public class FileDestination: BaseDestination {
                     let line = str + "\n"
                     if let data = line.data(using: String.Encoding.utf8) {
                         fileHandle.write(data)
+                        if syncAfterEachWrite {
+                            fileHandle.synchronizeFile()
+                        }
                     }
                 }
             }
