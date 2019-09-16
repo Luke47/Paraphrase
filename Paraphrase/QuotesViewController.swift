@@ -15,7 +15,7 @@ class QuotesViewController: UITableViewController {
     var model = QuotesModel()
 
     // whichever row was selected; used when adjusting the data source after editing
-    var selectedRow : Int?
+    var selectedRow: Int?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,13 +95,13 @@ class QuotesViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let delete = UITableViewRowAction(style: .destructive, title: "Delete") { [unowned self] (action, indexPath) in
+        let delete = UITableViewRowAction(style: .destructive, title: "Delete") { [unowned self] (_, indexPath) in
             SwiftyBeaver.info("Deleting quote at index \(indexPath.row)")
             self.model.remove(at: indexPath.row)
             self.tableView.deleteRows(at: [indexPath], with: .automatic)
         }
 
-        let edit = UITableViewRowAction(style: .normal, title: "Edit") { [unowned self] (action, indexPath) in
+        let edit = UITableViewRowAction(style: .normal, title: "Edit") { [unowned self] (_, indexPath) in
             let quote = self.model.quote(at: indexPath.row)
             self.selectedRow = indexPath.row
 
@@ -120,4 +120,3 @@ class QuotesViewController: UITableViewController {
         return [delete, edit]
     }
 }
-

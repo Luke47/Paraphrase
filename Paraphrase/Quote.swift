@@ -43,7 +43,7 @@ struct Quote: Codable, Comparable {
         return finishedQuote
     }
 
-    static func <(lhs: Quote, rhs: Quote) -> Bool {
+    static func < (lhs: Quote, rhs: Quote) -> Bool {
         return lhs.author < rhs.author
     }
 }

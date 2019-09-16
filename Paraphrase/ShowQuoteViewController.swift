@@ -12,7 +12,7 @@ import SwiftyBeaver
 class ShowQuoteViewController: UIViewController {
     @IBOutlet var quoteLabel: UILabel!
 
-    var quote : Quote?
+    var quote: Quote?
 
     override func viewDidLoad() {
         super.viewDidLoad()
